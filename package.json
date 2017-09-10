@@ -1,0 +1,48 @@
+{
+    "name": "react-typescript-toolbox",
+    "displayName": "React Typescript Toolbox",
+    "description": "Helpful toolbox for React Web Applications with Typescript",
+    "version": "0.1.2",
+    "publisher": "svenliebig",
+    "repository": {
+        "url": "https://github.com/Sly321/react-typescript-toolbox"
+    },
+    "engines": {
+        "vscode": "^1.16.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.sayHello"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.sayHello",
+                "title": "Hello World"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test",
+        "minor": "vsce publish minor",
+        "patch": "vsce publish patch",
+        "major": "vsce publish major"
+    },
+    "devDependencies": {
+        "typescript": "^2.5.2",
+        "vscode": "^1.1.5",
+        "mocha": "^3.5.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "vsce": "^1.30.0"
+    }
+}
