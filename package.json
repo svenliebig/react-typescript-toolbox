@@ -11,6 +11,18 @@
     "engines": {
         "vscode": "^1.16.0"
     },
+    "bugs": {
+        "url": "https://github.com/Sly321/react-typescript-toolbox/issues",
+        "email": "liebigsv@gmail.com"
+    },
+    "keywords": [
+        "React",
+        "TypeScript",
+        "Generate",
+        "Component",
+        "Test",
+        "less"
+    ],
     "categories": [
         "Other"
     ],

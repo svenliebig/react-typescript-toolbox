@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 0.6.1 - 11.09.2017
+### Added
+- Updated readme
+
 ## 0.6.0 - 11.09.2017
 ### Added
 - Configuration for stylesheet and test.
