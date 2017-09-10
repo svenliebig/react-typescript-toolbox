@@ -1,6 +1,6 @@
 'use strict';
 import { error, info } from './error-codes';
-import { Component } from './templates';
+import { Component, Test } from './templates';
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
@@ -27,9 +27,15 @@ export function activate(context: vscode.ExtensionContext) {
 function createComponent(path: string): (value: string) => void | Thenable<void> {
     return (className: string) => {
         const componentData = Component.create(className);
-        const componentPath = `${path}\\${className}\\${className}.tsx`;
+        const componentPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.tsx`;
+        const testData = Test.create(className);
+        const testPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.test.tsx`;
+        const lessData = '';
+        const lessPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.less`;
         mkdirp(`${path}\\${className}`, (err) => {
             fs.writeFile(componentPath, componentData);
+            fs.writeFile(testPath, testData);
+            fs.writeFile(lessPath, lessData);
             vscode.window.showInformationMessage(`Component '${className}' created!`);
         });
     };
