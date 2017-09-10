@@ -4,19 +4,26 @@ Extension with helpful commands for React Applications written in TypeScript.
 
 ## Features
 
-No Features yet.
+Create a React Component with a Test and a Less file from the Visual Studio Code Explorer Contextmenu.
 
-![Template](images/feature.png)
+![Template](images/showcase.gif)
 
-> Tip: Template Tip.
+> Tip: Rightclick in Visual Studio Code Explorer and > Generate Component.
+
+## Upcoming! Features
+
+- Use UserConfiguration to:
+  - generate test (true | false)
+  - generate styleshert (none | less | css | sass)
+  - use tabs or spaces for indentation
 
 ## Requirements
 
-This extension has no dependencies to other extensions.
+This extension has no dependencies to other extensions. Maybe node.js installed ist required!
 
 ## Extension Settings
 
-This extension contributes the following settings:
+This extension contributes the following settings: (Not Implemented yet ! !)
 
 * `reacttstoolbox.enable`: enable/disable this extension
 * `reacttstoolbox.tabs`: `('tabs'` | `'spaces')`
@@ -27,12 +34,12 @@ Nope.
 
 ## Release Notes
 
-### 0.0.1
+### 0.5.0
 
-Initial release, stay tuned!
+Create a TypeScript React Component with Test and Less file from Contextmenu.
 
 -----------------------------------------------------------------------
 
 ### For more information
 
-* [Github](https://github.com/Sly321)
+* [Github](https://github.com/Sly321/react-typescript-toolbox)
