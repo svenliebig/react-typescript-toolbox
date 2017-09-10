@@ -2,8 +2,9 @@
     "name": "react-typescript-toolbox",
     "displayName": "React Typescript Toolbox",
     "description": "Helpful toolbox for React Web Applications with Typescript",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "publisher": "svenliebig",
+    "icon": "images/logo.png",
     "repository": {
         "url": "https://github.com/Sly321/react-typescript-toolbox"
     },
@@ -31,6 +32,28 @@
                 "command": "reactTypeScriptToolbox.generateComponent",
                 "group": "edit"
             }]
+        }
+    },
+    "configuration": {
+        "type": "object",
+        "title": "React TypeScript Toolbox Configuration",
+        "properties": {
+            "reactTypeScriptToolbox.stylesheet": {
+                "type": "string",
+                "default": "less",
+                "description": "(none | less | css | sass) - Select the type of stylesheet the will be generated, or none."
+            },
+            "reactTypeScriptToolbox.test": {
+                "type": "boolean",
+                "default": "true",
+                "description": "Indicates if a test should be generated or not."
+            },
+
+            "reactTypeScriptToolbox.indentation": {
+                "type": "string",
+                "default": "tabs",
+                "description": "(tabs | spaces) - Select the indentation, spaces or tabs."
+            }
         }
     },
     "scripts": {

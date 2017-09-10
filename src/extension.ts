@@ -5,6 +5,8 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
 
+let config = vscode.workspace.getConfiguration('reactTypeScriptToolbox');
+
 export function activate(context: vscode.ExtensionContext) {
 
     /**
@@ -26,16 +28,34 @@ export function activate(context: vscode.ExtensionContext) {
 
 function createComponent(path: string): (value: string) => void | Thenable<void> {
     return (className: string) => {
+        /** Component */
         const componentData = Component.create(className);
         const componentPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.tsx`;
+
+        /** Test */
         const testData = Test.create(className);
         const testPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.test.tsx`;
-        const lessData = '';
-        const lessPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.less`;
+        const generateTests = config.get<boolean>('test', true);
+
+        /** Stylesheet */
+        const stylesheetData = '';
+        let stylesheetPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.`;
+        const generateStylesheet = config.get<string>('stylesheet', 'less');
+        if (generateStylesheet !== 'none') {
+            stylesheetPath += generateStylesheet;
+        }
+
         mkdirp(`${path}\\${className}`, (err) => {
             fs.writeFile(componentPath, componentData);
-            fs.writeFile(testPath, testData);
-            fs.writeFile(lessPath, lessData);
+            
+            if (generateTests) {
+                fs.writeFile(testPath, testData);
+            }
+
+            if (generateStylesheet !== 'none') {
+                fs.writeFile(stylesheetPath, stylesheetData);
+            }
+
             vscode.window.showInformationMessage(`Component '${className}' created!`);
         });
     };

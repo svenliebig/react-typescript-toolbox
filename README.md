@@ -13,9 +13,8 @@ Create a React Component with a Test and a Less file from the Visual Studio Code
 ## Upcoming! Features
 
 - Use UserConfiguration to:
-  - generate test (true | false)
-  - generate styleshert (none | less | css | sass)
   - use tabs or spaces for indentation
+  - choose if folder and file are lowercase
 
 ## Requirements
 
@@ -23,16 +22,20 @@ This extension has no dependencies to other extensions. Maybe node.js installed 
 
 ## Extension Settings
 
-This extension contributes the following settings: (Not Implemented yet ! !)
+Available Settings since 0.6:
 
-* `reacttstoolbox.enable`: enable/disable this extension
-* `reacttstoolbox.tabs`: `('tabs'` | `'spaces')`
+* `reactTypeScriptToolbox.stylesheet`: `('none' | 'less' | 'css' | 'sass')`
+* `reactTypeScriptToolbox.test`: `(true | false)`
 
 ## Known Issues
 
 Nope.
 
 ## Release Notes
+
+### 0.6.0
+
+Add configuration for stylesheet and test.
 
 ### 0.5.0
 
