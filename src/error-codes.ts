@@ -6,7 +6,9 @@ const error = {
 
 const info = {
 	/** No directory selected from context menu */
-	SELECT_DIRECTORY: 'Please select a directory as root for the new component.'
+	SELECT_DIRECTORY: 'Please select a directory as root for the new component.',
+	/** Call from context menu */
+	PLEASE_CONTEXT: 'Pleace call this extension from the context menu in the explorer sidebar.'
 }
 
 export { info as info };
