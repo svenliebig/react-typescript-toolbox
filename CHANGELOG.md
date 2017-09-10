@@ -1,7 +1,9 @@
 # Change Log
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## 0.0.1 - 10.09.2017
+### Added
+- Initial empty commit.
 
 ## [Unreleased]
 - Initial release

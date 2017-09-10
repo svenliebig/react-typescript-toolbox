@@ -14,16 +14,24 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:reactTypeScriptToolbox.generateComponent"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "reactTypeScriptToolbox.generateComponent",
+                "category": "ReactTS Toolbox",
+                "title": "Generate Component",
+                "icon": "images/logo.svg"
             }
-        ]
+        ],
+        "menus": {
+            "explorer/context": [{
+                "command": "reactTypeScriptToolbox.generateComponent",
+                "group": "edit"
+            }]
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
