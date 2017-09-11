@@ -1,5 +1,6 @@
-![tool](images/logo.png)![plus](images/plus.png)![react](images/react.png) 
-# react-typescript-toolbox
+![tool](images/logo.png)![plus](images/plus.png)![react](images/react.png)
+
+# react-typescript-toolbox-0.6.2
 
 Extension to create TypeScript React Components from Visual Studio Code explorer menu.
 
@@ -26,7 +27,7 @@ Available Settings since 0.6:
 
 ## Known Issues
 
-I currently don't know why my Default Settings are not writting in the user/settings.json file on install. But they work if you add them to any setting.json file (Workspace or User). Working on this, or if you can help me, feel free to write a mail!
+Something is wrong with the installation sometimes. . Working on it.
 
 ## Release Notes
 
@@ -42,9 +43,9 @@ Create a TypeScript React Component with Test and Less file from Contextmenu.
 
 ## Upcoming! Features
 
-- Use UserConfiguration to:
-  - use tabs or spaces for indentation
-  - choose if folder and file are lowercase
+* Use UserConfiguration to:
+  * use tabs or spaces for indentation
+  * choose if folder and file are lowercase
 
 ### For more information
 

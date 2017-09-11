@@ -2,41 +2,39 @@
     "name": "react-typescript-toolbox",
     "displayName": "React Typescript Toolbox",
     "description": "Helpful toolbox for React Web Applications with Typescript",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "publisher": "svenliebig",
     "icon": "images/logo.png",
-    "repository": {
-        "url": "https://github.com/Sly321/react-typescript-toolbox"
-    },
     "engines": {
         "vscode": "^1.16.0"
     },
-    "bugs": {
-        "url": "https://github.com/Sly321/react-typescript-toolbox/issues",
-        "email": "liebigsv@gmail.com"
-    },
+    "categories": [
+        "Other"
+    ],
     "keywords": [
         "React",
         "TypeScript",
         "Generate",
         "Component",
-        "Test",
-        "less"
+        "Test"
     ],
-    "categories": [
-        "Other"
-    ],
+    "bugs": {
+        "url": "https://github.com/Sly321/react-typescript-toolbox/issues",
+        "email": "liebigsv@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Sly321/react-typescript-toolbox.git"
+    },
     "activationEvents": [
-        "onCommand:reactTypeScriptToolbox.generateComponent"
+        "*"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
             {
                 "command": "reactTypeScriptToolbox.generateComponent",
-                "category": "ReactTS Toolbox",
-                "title": "Generate Component",
-                "icon": "images/logo.svg"
+                "title": "Generate Component"
             }
         ],
         "menus": {
@@ -46,26 +44,26 @@
                     "group": "edit"
                 }
             ]
-        }
-    },
-    "configuration": {
-        "type": "object",
-        "title": "React TypeScript Toolbox Configuration",
-        "properties": {
-            "reactTypeScriptToolbox.stylesheet": {
-                "type": "string",
-                "default": "less",
-                "description": "(none | less | css | sass) - Select the type of stylesheet the will be generated, or none."
-            },
-            "reactTypeScriptToolbox.test": {
-                "type": "boolean",
-                "default": "true",
-                "description": "Indicates if a test should be generated or not."
-            },
-            "reactTypeScriptToolbox.indentation": {
-                "type": "string",
-                "default": "tabs",
-                "description": "(tabs | spaces) - Select the indentation, spaces or tabs."
+        },
+        "configuration": {
+            "type": "object",
+            "title": "React TypeScript Toolbox Configuration",
+            "properties": {
+                "reactTypeScriptToolbox.stylesheet": {
+                    "type": "string",
+                    "default": "less",
+                    "description": "(none | less | css | sass) - Select the type of stylesheet the will be generated, or none."
+                },
+                "reactTypeScriptToolbox.test": {
+                    "type": "boolean",
+                    "default": "true",
+                    "description": "Indicates if a test should be generated or not."
+                },
+                "reactTypeScriptToolbox.indentation": {
+                    "type": "string",
+                    "default": "tabs",
+                    "description": "(tabs | spaces) - Select the indentation, spaces or tabs."
+                }
             }
         }
     },

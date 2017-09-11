@@ -26,40 +26,38 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(disposable);
 }
 
-function createComponent(path: string): (value: string) => void | Thenable<void> {
-    return (className: string) => {
-        /** Component */
-        const componentData = Component.create(className);
-        const componentPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.tsx`;
+function createComponent(path: string, className: string): void {
+    /** Component */
+    const componentData = Component.create(className);
+    const componentPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.tsx`;
 
-        /** Test */
-        const testData = Test.create(className);
-        const testPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.test.tsx`;
-        const generateTests = config.get<boolean>('test', true);
+    /** Test */
+    const testData = Test.create(className);
+    const testPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.test.tsx`;
+    const generateTests = config.get<boolean>('test', true);
 
-        /** Stylesheet */
-        const stylesheetData = '';
-        let stylesheetPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.`;
-        const generateStylesheet = config.get<string>('stylesheet', 'less');
-        if (generateStylesheet !== 'none') {
-            stylesheetPath += generateStylesheet;
+    /** Stylesheet */
+    const stylesheetData = '';
+    let stylesheetPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.`;
+    const generateStylesheet = config.get<string>('stylesheet', 'less');
+    if (generateStylesheet !== 'none') {
+        stylesheetPath += generateStylesheet;
+    }
+
+    mkdirp(`${path}\\${className}`, (err) => {
+        fs.writeFile(componentPath, componentData);
+        
+        if (generateTests) {
+            fs.writeFile(testPath, testData);
         }
 
-        mkdirp(`${path}\\${className}`, (err) => {
-            fs.writeFile(componentPath, componentData);
-            
-            if (generateTests) {
-                fs.writeFile(testPath, testData);
-            }
+        if (generateStylesheet !== 'none') {
+            fs.writeFile(stylesheetPath, stylesheetData);
+        }
 
-            if (generateStylesheet !== 'none') {
-                fs.writeFile(stylesheetPath, stylesheetData);
-            }
-
-            vscode.window.showInformationMessage(`Component '${className}' created!`);
-        });
-    };
-}
+        vscode.window.showInformationMessage(`Component '${className}' created!`);
+    });
+};
 
 function handleEvent(evt: any) {
     fs.lstat(`${evt.fsPath}`, (err, stats) => {
@@ -68,7 +66,11 @@ function handleEvent(evt: any) {
             return;
         }
         if (stats.isDirectory()) {
-            vscode.window.showInputBox(inputBoxOptions).then(createComponent(evt.fsPath));
+            vscode.window.showInputBox(inputBoxOptions).then((value: string) => {
+                if(value !== undefined && value !== '') {
+                    createComponent(evt.fsPath, value);
+                }
+            });
         } else if (stats.isFile()) {
             vscode.window.showInformationMessage(info.SELECT_DIRECTORY);
         }
