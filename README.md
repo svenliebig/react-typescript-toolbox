@@ -1,6 +1,9 @@
 ![tool](images/logo.png)![plus](images/plus.png)![react](images/react.png)
 
-# react-typescript-toolbox-0.6.4
+# react-typescript-toolbox
+![version](https://vsmarketplacebadge.apphb.com/version-short/svenliebig.react-typescript-toolbox.svg?style=flat-square)
+![installs](https://vsmarketplacebadge.apphb.com/installs-short/svenliebig.react-typescript-toolbox.svg?style=flat-square)
+![rating](https://vsmarketplacebadge.apphb.com/rating-short/svenliebig.react-typescript-toolbox.svg?style=flat-square)
 
 Extension to create TypeScript React Components from Visual Studio Code explorer menu.
 
