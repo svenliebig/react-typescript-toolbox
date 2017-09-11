@@ -1,6 +1,6 @@
 ![tool](images/logo.png)![plus](images/plus.png)![react](images/react.png)
 
-# react-typescript-toolbox-0.6.2
+# react-typescript-toolbox-0.6.4
 
 Extension to create TypeScript React Components from Visual Studio Code explorer menu.
 
@@ -27,9 +27,13 @@ Available Settings since 0.6:
 
 ## Known Issues
 
-Something is wrong with the installation sometimes. . Working on it.
+I dont regex-check the input for camelcase right now, only for empty.
 
 ## Release Notes
+
+### 0.6.4
+
+Fixed some bugs with the settings and the installation.
 
 ### 0.6.0
 
