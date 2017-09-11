@@ -31,6 +31,13 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function createComponent(path: string, className: string): void {
+    const regex = /(^[A-Z][A-Za-z]*$)/;
+
+    if(!className.match(regex) &&  config.get<boolean>('regexCheck', true)) {
+        vscode.window.showErrorMessage(error.REGEX_ERROR);
+        return;
+    }
+
     /** Component */
     const componentData = Component.create(className);
     const componentPath = `${path}\\${className.toLocaleLowerCase()}\\${className.toLocaleLowerCase()}.tsx`;

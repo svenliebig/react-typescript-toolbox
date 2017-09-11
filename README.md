@@ -23,10 +23,11 @@ This extension has no dependencies to other extensions. Maybe node.js installed 
 
 ## Extension Settings
 
-Available Settings since 0.6:
+Available Settings:
 
 * `reactTypeScriptToolbox.stylesheet`: `('none' | 'less' | 'css' | 'sass')`
 * `reactTypeScriptToolbox.test`: `(true | false)`
+* `reactTypeScriptToolbox.regexCheck`: `(true | false)`
 
 ## Known Issues
 

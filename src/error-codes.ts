@@ -1,7 +1,8 @@
 const error = {
 	/** No package.json error message */
-	NO_PACKAGE_JSON: 'No package.json found in the workspace root.',
-	UNHANDLED_ERROR: 'unhandled error happened - please report to liebigsv@gmail.com'
+	NO_PACKAGE_JSON: 'No package.json found in the workspace root',
+	UNHANDLED_ERROR: 'unhandled error happened - please report to liebigsv@gmail.com',
+	REGEX_ERROR: 'ClassName Regex Error: Should match (^[A-Z][A-Za-z]*$), you can disable the regex check in your settings'
 }
 
 const info = {
