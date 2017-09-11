@@ -31,9 +31,10 @@ Available Settings:
 
 ## Known Issues
 
-I dont regex-check the input for camelcase right now, only for empty.
-
 ## Release Notes
+
+###  0.7.0
+Added Regex Classname Check and Regex Settings option
 
 ### 0.6.4
 
