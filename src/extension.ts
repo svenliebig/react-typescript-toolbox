@@ -16,6 +16,10 @@ export function activate(context: vscode.ExtensionContext) {
         if (evt == undefined) {
             vscode.window.showInformationMessage(info.PLEASE_CONTEXT);
             return;
+        } else if (fs == undefined) {
+            vscode.window.showInformationMessage(info.FILE_SYSTEM_UNDEFINED);
+        } else if (mkdirp == undefined) {
+            vscode.window.showInformationMessage(info.MKDIR_UNDEFINED);
         } else if (!hasPackageJson()) {
             return;
         }

@@ -1,9 +1,10 @@
 # Change Log
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
-## 0.6.2 - 11.09.2017
+## 0.6.3 - 11.09.2017
 ### Added
 - Fix Initial Settings
+- NPM Dependencies for Mkdir and FS
 
 ## 0.6.1 - 11.09.2017
 ### Added
