@@ -1,40 +1,67 @@
-class Component {
-	static create(name: string): string {
+export class Component {
+	static create(name: string, css: string): string {
 		let result = '';
-		result += `/** Import React */\n`;
-		result += `import * as React from 'react';\n`;
+		result += `import * as React from 'react'\n`;
 		result += `\n`;
-		result += `/** Stylesheet Imports */\n`;
-		result += `import './${name.toLowerCase()}.css';\n`;
-		result += `\n`;
-		result += `interface Props {\n`;
+		
+		if (css !== 'none') {
+			result += `/** Stylesheet Imports */\n`;
+			result += `import './${name}.${css.toLowerCase()}'\n`;
+			result += `\n`;
+		}
+
+		result += `export interface Props {\n`;
 		result += `\tchildren?: React.ReactNode;\n`;
 		result += `}\n`;
 		result += `\n`;
-		result += `interface State {\n`;
+		result += `export interface State {\n`;
 		result += `}\n`;
 		result += `\n`;
-		result += `class ${name} extends React.Component<Props> {\n`;
-		result += `\tpublic state: State;\n`;
+		result += `export class ${name} extends React.Component<Props, State> {\n`;
+		result += `\tpublic state: State\n\n`;
 		result += `\tconstructor(public props: Props) {\n`;
-		result += `\t\tsuper(props);\n`;
+		result += `\t\tsuper(props)\n\n`;
 		result += `\t\tthis.state = {\n`;
-		result += `\t\t};\n`;
+		result += `\t\t}\n`;
 		result += `\t}\n`;
 		result += `\n`;
 		result += `\trender() {\n`;
 		result += `\t\treturn (\n`;
 		result += `\t\t\t<div>{ this.props.children }</div>\n`;
-		result += `\t\t);\n`;
+		result += `\t\t)\n`;
 		result += `\t}\n`;
 		result += `}\n`;
-		result += `\n`;
-		result += `export default ${name};`;
 		return result;
 	}
 }
 
-class Test {
+export class ExportIndex {
+	static create(name: string) {
+		let r = ``
+
+		r += `export { ${name} } from './${name}'`
+
+		return r
+	}
+}
+
+export class Enum {
+	static create(name: string) {
+		let r = ''
+
+		r += `/**\n`
+		r += ` * {@link ${name.toLowerCase()}}\n`
+		r += ` */\n`
+		r += `export enum ${name} {\n`
+		r += `\tMyConstant = 'MyConstantValue'\n`
+		r += `}\n`
+
+
+		return r
+	}
+}
+
+export class Test {
 	static create(name: string): string {
 		let result = '';
 		result += `/** Import React */\n`
@@ -71,6 +98,3 @@ class Test {
 		return result;
 	}
 }
-
-export { Component as Component };
-export { Test as Test };
