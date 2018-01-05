@@ -10,38 +10,31 @@ let config = vscode.workspace.getConfiguration('reactTypeScriptToolbox');
 
 export function activate(context: vscode.ExtensionContext) {
 
+    function contextFailed(evt) {
+        if (evt == undefined)
+            return vscode.window.showInformationMessage(info.PLEASE_CONTEXT)
+        else if (fs == undefined)
+            return vscode.window.showInformationMessage(info.FILE_SYSTEM_UNDEFINED)
+        else if (mkdirp == undefined)
+            return vscode.window.showInformationMessage(info.MKDIR_UNDEFINED)
+        return null
+    }
     /**
      * Creates a react component on a directory root.
      */
     let disposable = vscode.commands.registerCommand('reactTypeScriptToolbox.generateComponent', (evt) => {
-        if (evt == undefined) {
-            vscode.window.showInformationMessage(info.PLEASE_CONTEXT);
-            return;
-        } else if (fs == undefined) {
-            vscode.window.showInformationMessage(info.FILE_SYSTEM_UNDEFINED);
-        } else if (mkdirp == undefined) {
-            vscode.window.showInformationMessage(info.MKDIR_UNDEFINED);
-        } else if (!hasPackageJson()) {
-            return;
-        }
+        if (contextFailed(evt)) 
+            return
 
-        handleEvent(evt);
+        handleEvent(evt)
     });
 
     /**
      * Creates a typescript enum on a directory root.
      */
     let disEnum = vscode.commands.registerCommand('reactTypeScriptToolbox.generateEnum', (evt) => {
-        if (evt == undefined) {
-            vscode.window.showInformationMessage(info.PLEASE_CONTEXT);
-            return;
-        } else if (fs == undefined) {
-            vscode.window.showInformationMessage(info.FILE_SYSTEM_UNDEFINED);
-        } else if (mkdirp == undefined) {
-            vscode.window.showInformationMessage(info.MKDIR_UNDEFINED);
-        } else if (!hasPackageJson()) {
-            return;
-        }
+        if (contextFailed(evt)) 
+            return
 
         handleEventEnum(evt);
     });
@@ -187,31 +180,31 @@ const inputBoxOptionsEnum = {
 /**
  * Returns true if package json exists, false if not.
  */
-const hasPackageJson = () => {
-    let isPackageJson = false;
+// const hasPackageJson = () => {
+//     let isPackageJson = false;
 
-    for (let x = 0; x < vscode.workspace.workspaceFolders.length; x++) {
-        let element = vscode.workspace.workspaceFolders[x];
-        const packagePath = `${element.uri.fsPath}\\package.json`;
-        let stats = fs.statSync(`${packagePath}`);
+//     for (let x = 0; x < vscode.workspace.workspaceFolders.length; x++) {
+//         let element = vscode.workspace.workspaceFolders[x];
+//         const packagePath = `${element.uri.fsPath}\\package.json`;
+//         let stats = fs.statSync(`${packagePath}`);
 
-        if (stats.isFile()) {
-            isPackageJson = true;
-        }
-    }
+//         if (stats.isFile()) {
+//             isPackageJson = true;
+//         }
+//     }
 
-    if (!isPackageJson) {
-        vscode.window.showErrorMessage(error.NO_PACKAGE_JSON);
-        return false;
-    } else {
-        return true;
-    }
-}
+//     if (!isPackageJson) {
+//         vscode.window.showErrorMessage(error.NO_PACKAGE_JSON);
+//         return false;
+//     } else {
+//         return true;
+//     }
+// }
 
 function appendToRootIndex(path, className) {
     const indexRootPath: string = `${path}\\index.ts`;
     if (fs.existsSync(indexRootPath)) {
-        fs.appendFile(indexRootPath, `\nexport { ${className} } from './${className}'`, (err) => {
+        fs.appendFile(indexRootPath, `\nexport { default as ${className} } from "./${className}"`, (err) => {
             if (err)
                 throw err
         })

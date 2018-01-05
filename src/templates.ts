@@ -1,12 +1,12 @@
 export class Component {
 	static create(name: string, css: string): string {
 		let result = '';
-		result += `import * as React from 'react'\n`;
+		result += `import * as React from "react"\n`;
 		result += `\n`;
 		
 		if (css !== 'none') {
 			result += `/** Stylesheet Imports */\n`;
-			result += `import './${name}.${css.toLowerCase()}'\n`;
+			result += `import "./${name}.${css.toLowerCase()}"\n`;
 			result += `\n`;
 		}
 
@@ -17,8 +17,9 @@ export class Component {
 		result += `export interface State {\n`;
 		result += `}\n`;
 		result += `\n`;
-		result += `export class ${name} extends React.Component<Props, State> {\n`;
-		result += `\tpublic state: State\n\n`;
+		result += `export default class ${name} extends React.Component<Props, State> {\n`;
+		result += `\n`;
+		// result += `\tpublic state: State\n\n
 		result += `\tconstructor(public props: Props) {\n`;
 		result += `\t\tsuper(props)\n\n`;
 		result += `\t\tthis.state = {\n`;
@@ -39,7 +40,7 @@ export class ExportIndex {
 	static create(name: string) {
 		let r = ``
 
-		r += `export { ${name} } from './${name}'`
+		r += `export { default } from "./${name}"`
 
 		return r
 	}
@@ -49,13 +50,10 @@ export class Enum {
 	static create(name: string) {
 		let r = ''
 
-		r += `/**\n`
-		r += ` * {@link ${name.toLowerCase()}}\n`
-		r += ` */\n`
-		r += `export enum ${name} {\n`
-		r += `\tMyConstant = 'MyConstantValue'\n`
+		r += `enum ${name} {\n`
+		r += `\tMyConstant = "MyConstantValue"\n`
 		r += `}\n`
-
+		r += `export default ${name}`
 
 		return r
 	}
