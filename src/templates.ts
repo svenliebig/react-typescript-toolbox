@@ -6,7 +6,7 @@ export class Component {
 		
 		if (css !== 'none') {
 			result += `/** Stylesheet Imports */\n`;
-			result += `import "./${name}.${css.toLowerCase()}"\n`;
+			result += `import "./${name}.${css}"\n`;
 			result += `\n`;
 		}
 
@@ -20,7 +20,7 @@ export class Component {
 		result += `export default class ${name} extends React.Component<Props, State> {\n`;
 		result += `\n`;
 		// result += `\tpublic state: State\n\n
-		result += `\tconstructor(public props: Props) {\n`;
+		result += `\tconstructor(props: Props) {\n`;
 		result += `\t\tsuper(props)\n\n`;
 		result += `\t\tthis.state = {\n`;
 		result += `\t\t}\n`;
@@ -71,7 +71,7 @@ export class Test {
 		result += `import 'jest-enzyme';\n`
 		result += `\n`
 		result += `/** Import Tested Component */\n`
-		result += `import ${name} from './${name.toLowerCase()}';\n`
+		result += `import ${name} from './${name}';\n`
 		result += `\n`
 		result += `const classUnderTest = ${name};\n`
 		result += `\n`
