@@ -2,7 +2,7 @@
     "name": "react-typescript-toolbox",
     "displayName": "React Typescript Toolbox",
     "description": "Helpful toolbox for React Web Applications with Typescript",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "publisher": "svenliebig",
     "icon": "images/logo.png",
     "engines": {
@@ -42,6 +42,16 @@
             }
         ],
         "menus": {
+            "commandPalette": [
+                {
+                    "command": "reactTypeScriptToolbox.generateComponent",
+                    "when": "false"
+                },
+                {
+                    "command": "reactTypeScriptToolbox.generateEnum",
+                    "when": "false"
+                }
+            ],
             "explorer/context": [
                 {
                     "command": "reactTypeScriptToolbox.generateComponent",
