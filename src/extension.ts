@@ -39,8 +39,44 @@ export function activate(context: vscode.ExtensionContext) {
         handleEvent(evt, createEnum);
     });
 
+    let generateIndex = vscode.commands.registerCommand('reactTypeScriptToolbox.generateIndex', (evt) => {
+        if (contextFailed(evt))
+            return
+
+        
+        fs.lstat(`${evt.fsPath}`, (err, stats) => {
+            if (err) {
+                return vscode.window.showErrorMessage(error.UNHANDLED_ERROR)
+            }
+            if (stats.isDirectory()) {
+                createIndex(evt.fsPath)
+            } else if (stats.isFile()) {
+                vscode.window.showInformationMessage(info.SELECT_DIRECTORY)
+            }
+        })
+    });
+
     context.subscriptions.push(generateComponent);
     context.subscriptions.push(generateEnum);
+    context.subscriptions.push(generateIndex);
+}
+
+// programmer uses confusion, how effective is it?
+function createIndex(path: string): void {
+    const directories: Array<string> = []
+    
+    function writeIndex() {
+        fs.readdirSync(path).map(val => fs.lstatSync(`${path}/${val}`).isDirectory() && directories.push(val))
+        const defaultExport = (val) => `export { default as ${val} } from "./${val}"\n`
+        let indexFile = directories.reduce((val, next, i) => i === 1 ? `${defaultExport(val)}${defaultExport(next)}` : `${val}${defaultExport(next)}`)
+        fs.writeFileSync(`${path}/index.ts`, indexFile);
+    }
+    
+    const opt: vscode.QuickPickOptions = { placeHolder: "Want to override the existing index.ts file?" }
+    if (fs.existsSync(`${path}/index.ts`))
+        vscode.window.showQuickPick(["Yes", "No"], opt).then(val => val === "Yes" && writeIndex())
+    else 
+        writeIndex()
 }
 
 function createComponent(path: string, className: string): void {
@@ -81,11 +117,11 @@ function createComponent(path: string, className: string): void {
     mkdirp(folder, (err) => {
         fs.writeFile(componentPath, componentData);
         fs.writeFile(exportPath, exportData)
-        
+
         if (generateTests) {
             fs.writeFile(testPath, testData);
         }
-        
+
         if (stylesheet !== 'none') {
             fs.writeFile(stylesheetPath, stylesheetData);
         }
@@ -122,17 +158,16 @@ function createEnum(path: string, className: string): void {
 function handleEvent(evt: any, success: Function) {
     fs.lstat(`${evt.fsPath}`, (err, stats) => {
         if (err) {
-            vscode.window.showErrorMessage(error.UNHANDLED_ERROR);
-            return;
+            return vscode.window.showErrorMessage(error.UNHANDLED_ERROR)
         }
         if (stats.isDirectory()) {
             vscode.window.showInputBox(inputBoxOptions).then((value: string) => {
                 if (value !== undefined && value !== '') {
-                    success(evt.fsPath, value);
+                    success(evt.fsPath, value)
                 }
-            });
+            })
         } else if (stats.isFile()) {
-            vscode.window.showInformationMessage(info.SELECT_DIRECTORY);
+            vscode.window.showInformationMessage(info.SELECT_DIRECTORY)
         }
     });
 }
@@ -183,7 +218,7 @@ function appendToRootIndex(path, className) {
         if (layered && config.get<boolean>('sortIndex', true)) {
             vscode.window.showQuickPick(Object.getOwnPropertyNames(categories)).then((value: string) => {
                 if (value !== undefined && value !== '') {
-                    
+
                     let newFile: string = ""
 
                     for (const key in categories) {
@@ -208,7 +243,7 @@ function appendToRootIndex(path, className) {
 
             const joined = rows.join("\n")
 
-        // Append if not layered
+            // Append if not layered
         } else {
 
             fs.appendFile(indexRootPath, `\nexport { default as ${className} } from "./${className}"`, (err) => {
@@ -216,7 +251,7 @@ function appendToRootIndex(path, className) {
                     throw err
                 vscode.window.showInformationMessage(`Component '${className}' created!`);
             })
-            
+
         }
     }
 }
