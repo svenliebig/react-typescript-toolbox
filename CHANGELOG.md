@@ -3,6 +3,12 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 0.10.1 - 11.01.2018
+
+### Fixed
+
+- empty rows after the layer declaration in index export files
+
 ## 0.10.0 - 09.01.2018
 
 ### Added

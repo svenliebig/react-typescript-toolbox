@@ -228,7 +228,7 @@ function appendToRootIndex(path, className) {
 
                         newFile += `${newFile == "" ? '' : '\n'}// ${key}\n`
                         for (const iterator of categories[key]) {
-                            if (iterator)
+                            if (iterator && iterator.trim() !== "")
                                 newFile += `${iterator}\n`
                         }
                     }
