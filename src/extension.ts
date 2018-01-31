@@ -88,7 +88,7 @@ function createComponent(path: string, className: string): void {
     }
 
     /** Folder Path */
-    const folder = `${path}\\${className}\\`
+    const folder = /^win/.test(process.platform) ? `${path}\\${className}\\` : `${path}/${className}/`;
 
     /** Options */
     const stylesheet = config.get<string>('stylesheet', 'none');
