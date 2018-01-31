@@ -3,6 +3,12 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 0.10.2 - 31.01.2018
+
+### Fixed [PathIssue](https://github.com/Sly321/react-typescript-toolbox/issues/3) reported by [jimfilippou](https://github.com/jimfilippou)
+
+- Linux filesystem wasn't supported, using path.resolve now for all path variables
+
 ## 0.10.1 - 11.01.2018
 
 ### Fixed

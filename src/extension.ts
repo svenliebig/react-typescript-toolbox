@@ -5,6 +5,7 @@ import { Component, Test, ExportIndex, Enum } from './templates'
 import * as vscode from 'vscode'
 import * as fs from 'fs'
 import * as mkdirp from 'mkdirp'
+import * as Path from "path"
 
 let config = vscode.workspace.getConfiguration('reactTypeScriptToolbox')
 
@@ -43,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (contextFailed(evt))
             return
 
-        
+
         fs.lstat(`${evt.fsPath}`, (err, stats) => {
             if (err) {
                 return vscode.window.showErrorMessage(error.UNHANDLED_ERROR)
@@ -64,18 +65,18 @@ export function activate(context: vscode.ExtensionContext) {
 // programmer uses confusion, how effective is it?
 function createIndex(path: string): void {
     const directories: Array<string> = []
-    
+
     function writeIndex() {
         fs.readdirSync(path).map(val => fs.lstatSync(`${path}/${val}`).isDirectory() && directories.push(val))
         const defaultExport = (val) => `export { default as ${val} } from "./${val}"\n`
         let indexFile = directories.reduce((val, next, i) => i === 1 ? `${defaultExport(val)}${defaultExport(next)}` : `${val}${defaultExport(next)}`)
-        fs.writeFileSync(`${path}/index.ts`, indexFile);
+        fs.writeFileSync(Path.resolve(path, `index.ts`), indexFile);
     }
-    
+
     const opt: vscode.QuickPickOptions = { placeHolder: "Want to override the existing index.ts file?" }
-    if (fs.existsSync(`${path}/index.ts`))
+    if (fs.existsSync(Path.resolve(path, `index.ts`)))
         vscode.window.showQuickPick(["Yes", "No"], opt).then(val => val === "Yes" && writeIndex())
-    else 
+    else
         writeIndex()
 }
 
@@ -88,27 +89,27 @@ function createComponent(path: string, className: string): void {
     }
 
     /** Folder Path */
-    const folder = `${path}\\${className}\\`
+    const folder = Path.resolve(path, className)
 
     /** Options */
     const stylesheet = config.get<string>('stylesheet', 'none');
 
     /** Component */
     const componentData = Component.create(className, stylesheet);
-    const componentPath = `${folder}${className}.tsx`;
+    const componentPath = Path.resolve(folder, `${className}.tsx`)
 
     /** Export TS */
     const exportData = ExportIndex.create(className)
-    const exportPath = `${folder}index.ts`
+    const exportPath = Path.resolve(folder, `index.ts`)
 
     /** Test */
     const testData = Test.create(className);
-    const testPath = `${folder}${className}.test.tsx`;
+    const testPath = Path.resolve(folder, `${className}.test.tsx`)
     const generateTests = config.get<boolean>('test', false);
 
     /** Stylesheet */
     const stylesheetData = '';
-    let stylesheetPath = `${folder}${className}.`;
+    let stylesheetPath = Path.resolve(folder, `${className}.`)
 
     if (stylesheet !== 'none') {
         stylesheetPath += stylesheet;
@@ -139,18 +140,18 @@ function createEnum(path: string, className: string): void {
     }
 
     /** Folder Path */
-    const folder = `${path}\\${className}\\`
+    const folder = Path.resolve(path, className)
 
     /** Enum */
     const enumData = Enum.create(className);
-    const enumPath = `${folder}${className}.ts`
+    const enumPath = Path.resolve(folder, `${className}.ts`)
     const exportData = ExportIndex.create(className)
-    const exportPath = `${folder}index.ts`
+    const exportPath = Path.resolve(folder, `index.ts`)
 
-    mkdirp(`${path}\\${className}`, (err) => {
+    mkdirp(folder, (err) => {
         fs.writeFile(enumPath, enumData);
         fs.writeFile(exportPath, exportData)
-    });
+    })
 
     appendToRootIndex(path, className)
 }
@@ -185,7 +186,7 @@ const inputBoxOptionsEnum: vscode.InputBoxOptions = {
 
 
 function appendToRootIndex(path, className) {
-    const indexRootPath: string = `${path}\\index.ts`
+    const indexRootPath: string = Path.resolve(path, "index.ts")
     if (fs.existsSync(indexRootPath)) {
 
         const indexContent: string = fs.readFileSync(indexRootPath, "utf8")
