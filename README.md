@@ -28,33 +28,15 @@ Available Settings:
 * `reactTypeScriptToolbox.stylesheet`: `('none' | 'less' | 'css' | 'sass')`
 * `reactTypeScriptToolbox.test`: `(true | false)`
 * `reactTypeScriptToolbox.regexCheck`: `(true | false)`
+* `reactTypeScriptToolbox.indentation`: `(tabs | spaces)`
+* `reactTypeScriptToolbox.sortIndex`: `(true | false)`
+
 
 ## Known Issues
 
-## Release Notes
-
-###  0.7.0
-Added Regex Classname Check and Regex Settings option
-
-### 0.6.4
-
-Fixed some bugs with the settings and the installation.
-
-### 0.6.0
-
-Add configuration for stylesheet and test.
-
-### 0.5.0
-
-Create a TypeScript React Component with Test and Less file from Contextmenu.
+## [Changelog](https://github.com/Sly321/react-typescript-toolbox/blob/master/CHANGELOG.md)
 
 -----------------------------------------------------------------------
-
-## Upcoming! Features
-
-* Use UserConfiguration to:
-  * use tabs or spaces for indentation
-  * choose if folder and file are lowercase
 
 ### For more information
 

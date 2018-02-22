@@ -1,7 +1,7 @@
 'use strict'
 
 import { error, info } from './error-codes'
-import { Component, Test, ExportIndex, Enum } from './templates'
+import { Component, Test, ExportIndex, Enum, Model } from './templates'
 import * as vscode from 'vscode'
 import * as fs from 'fs'
 import * as mkdirp from 'mkdirp'
@@ -28,6 +28,16 @@ export function activate(context: vscode.ExtensionContext) {
             return
 
         handleEvent(evt, createComponent)
+    });
+
+    /**
+     * Creates a typescript model on a directory root.
+     */
+    let generateModel = vscode.commands.registerCommand('reactTypeScriptToolbox.generateModel', (evt) => {
+        if (contextFailed(evt))
+            return
+
+        handleEvent(evt, createModel);
     });
 
     /**
@@ -58,6 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(generateComponent);
+    context.subscriptions.push(generateModel);
     context.subscriptions.push(generateEnum);
     context.subscriptions.push(generateIndex);
 }
@@ -136,7 +147,7 @@ function createEnum(path: string, className: string): void {
 
     if (!className.match(regex) && config.get<boolean>('regexCheck', true)) {
         vscode.window.showErrorMessage(error.REGEX_ERROR)
-        return;
+        return
     }
 
     /** Folder Path */
@@ -150,6 +161,31 @@ function createEnum(path: string, className: string): void {
 
     mkdirp(folder, (err) => {
         fs.writeFile(enumPath, enumData);
+        fs.writeFile(exportPath, exportData)
+    })
+
+    appendToRootIndex(path, className)
+}
+
+function createModel(path: string, className: string): void {
+    const regex = /(^[A-Z][A-Za-z]*$)/;
+
+    if (!className.match(regex) && config.get<boolean>('regexCheck', true)) {
+        vscode.window.showErrorMessage(error.REGEX_ERROR)
+        return
+    }
+
+    /** Folder Path */
+    const folder = Path.resolve(path, className)
+
+    /** Model */
+    const modelData = Model.create(className);
+    const modelPath = Path.resolve(folder, `${className}.ts`)
+    const exportData = ExportIndex.create(className)
+    const exportPath = Path.resolve(folder, `index.ts`)
+
+    mkdirp(folder, (err) => {
+        fs.writeFile(modelPath, modelData);
         fs.writeFile(exportPath, exportData)
     })
 
