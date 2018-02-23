@@ -3,6 +3,12 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 1.1.2 - 23.02.2018
+
+### Added
+
+- Support for editor.Tabsize Option by [Mika Andrianarijaona](https://github.com/mikaoelitiana) - Thanks. :)
+
 ## 1.1.1 - 22.02.2018
 
 ### Added
