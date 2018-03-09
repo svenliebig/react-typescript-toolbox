@@ -3,6 +3,17 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 1.2.0 - 10.03.2018
+
+
+### Refactor
+
+- Refactored Code to make this project a bit more maintainable
+
+### Added
+
+- Support for root/test folders, there are now 3 options to genereate tests: same | flat | structured, the "same" option has the same behauvior like in the previous versions, the test file is created in the same directory as the component file. The "flat" options will create the testfile in <workspaceroot>/test/* directly. The "structured" options will create the test file in the <workspaceroot>/test/<componentfileFolder>, like you create a new component in <workspaceroot>/src/Components/ called MyComponent, the Testfile for MyComponent will be created in <workspaceroot>/test/Components/*.
+
 ## 1.1.2 - 23.02.2018
 
 ### Added

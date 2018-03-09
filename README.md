@@ -30,6 +30,7 @@ Available Settings:
 * `reactTypeScriptToolbox.regexCheck`: `(true | false)`
 * `reactTypeScriptToolbox.indentation`: `(tabs | spaces)`
 * `reactTypeScriptToolbox.sortIndex`: `(true | false)`
+* `reactTypeScriptToolbox.testFolder`: `(same | flat | structured)`
 
 ## Known Issues
 

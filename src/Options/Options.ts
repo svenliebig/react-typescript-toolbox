@@ -9,6 +9,12 @@ export enum StyleSheetOptions {
     Sass = "sass"
 }
 
+export enum TestFolderOptions {
+    Same = "same",
+    Flat = "flat",
+    Structured = "structured"
+}
+
 export default class Options {
     public static get regexCheck(): boolean {
         return config.get<boolean>('regexCheck', true)
@@ -32,5 +38,20 @@ export default class Options {
 
     public static get test(): boolean {
         return config.get<boolean>('test', false)
+    }
+
+    public static get testFolder(): TestFolderOptions {
+        const value = config.get<string>("testFolder", "same")
+
+        switch (value) {
+            case "same":
+                return TestFolderOptions.Same
+            case "flat":
+                return TestFolderOptions.Flat
+            case "structured":
+                return TestFolderOptions.Structured
+            default:
+                return TestFolderOptions.Same
+        }
     }
 }

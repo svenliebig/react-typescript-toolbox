@@ -2,7 +2,7 @@
     "name": "react-typescript-toolbox",
     "displayName": "React Typescript Toolbox",
     "description": "Helpful toolbox for React Web Applications with Typescript",
-    "version": "1.1.2",
+    "version": "1.2.0",
     "publisher": "svenliebig",
     "icon": "images/logo.png",
     "engines": {
@@ -31,7 +31,8 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "commands": [{
+        "commands": [
+            {
                 "command": "reactTypeScriptToolbox.generateComponent",
                 "title": "Generate Component"
             },
@@ -49,7 +50,8 @@
             }
         ],
         "menus": {
-            "commandPalette": [{
+            "commandPalette": [
+                {
                     "command": "reactTypeScriptToolbox.generateComponent",
                     "when": "false"
                 },
@@ -66,7 +68,8 @@
                     "when": "false"
                 }
             ],
-            "explorer/context": [{
+            "explorer/context": [
+                {
                     "command": "reactTypeScriptToolbox.generateComponent",
                     "group": "edit"
                 },
@@ -97,6 +100,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Indicates if a test should be generated or not."
+                },
+                "reactTypeScriptToolbox.testFolder": {
+                    "type": "string",
+                    "default": "same",
+                    "description": "(same | flat | structured) - select the folder to create the test file. 'same' - The same folder as the created file | 'flat' - searchs for a 'test' folder under the workspace root (doesn't support multi workspace, it takes the first workspace) and creates the testfile flat into the folder | 'structured' - searches for a test folder in the workspace root and creates the same folder structure as the created file, if the file 'mynewcomponet' is created in 'src/components/mynewcomponet' then the test will be created in 'test/components/'."
                 },
                 "reactTypeScriptToolbox.sortIndex": {
                     "type": "boolean",

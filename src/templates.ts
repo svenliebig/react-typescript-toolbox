@@ -1,6 +1,8 @@
 import * as vscode from "vscode"
 import File from "./Models/File/File"
-import Options, { StyleSheetOptions } from "./Options/Options"
+import Options, { StyleSheetOptions, TestFolderOptions } from "./Options/Options"
+import * as fs from "fs"
+import * as Path from "path"
 
 class Base {
 	static getSeparator() {
@@ -144,17 +146,44 @@ export class ComponentTest extends Base {
 		if (Options.test) {
 			const file = new File()
 
-			file.name = name
-			file.content = ComponentTest.createContent(name)
+			const folder = Options.testFolder
+			let subPath = "."
+
+			if (folder === TestFolderOptions.Same) {
+				file.path = path
+			} else if (folder === TestFolderOptions.Flat) {
+				const root = vscode.workspace.workspaceFolders[0].uri.fsPath
+				const structure = path.replace(root, "").replace(/\\/g, "/")
+				subPath = ".." + structure
+				file.path = Path.resolve(root, "test")
+			} else if (folder === TestFolderOptions.Structured) {
+				const root = vscode.workspace.workspaceFolders[0].uri.fsPath
+				const structure = path.replace(root, "").replace(/\\/g, "/")
+
+				const testFolderStr = ComponentTest.createTestFolderStructure(structure, name)
+				file.path = Path.resolve(root, "test", Path.join.apply(Path, testFolderStr))
+
+
+				const up = ("/..".repeat(testFolderStr.length))
+				subPath = ".." + up + path.replace(root, "").replace(/\\/g, "/")
+			}
+
+			file.name = `${name}.test`
+			file.content = ComponentTest.createContent(name, subPath)
 			file.type = "tsx"
-			file.path = path
 
 			return file
 		}
 		return null
 	}
 
-	private static createContent(name: string): string {
+	private static createTestFolderStructure(src, className) {
+		const splitted = src.split("/").filter(e => e !== "" && e !== className)
+		return splitted.splice(1)
+	}
+
+
+	private static createContent(name: string, subPath: string): string {
 		const s = ComponentTest.getSeparator()
 		const semi = ComponentTest.getSemicolon()
 
@@ -168,7 +197,7 @@ export class ComponentTest extends Base {
 		result += `import 'jest-enzyme'${semi}\n`
 		result += `\n`
 		result += `/** Import Tested Component */\n`
-		result += `import ${name} from './${name}'${semi}\n`
+		result += `import ${name} from '${subPath}/${name}'${semi}\n`
 		result += `\n`
 		result += `const classUnderTest = ${name}${semi}\n`
 		result += `\n`
