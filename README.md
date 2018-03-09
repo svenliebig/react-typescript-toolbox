@@ -31,7 +31,6 @@ Available Settings:
 * `reactTypeScriptToolbox.indentation`: `(tabs | spaces)`
 * `reactTypeScriptToolbox.sortIndex`: `(true | false)`
 
-
 ## Known Issues
 
 ## [Changelog](https://github.com/Sly321/react-typescript-toolbox/blob/master/CHANGELOG.md)

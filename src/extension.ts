@@ -1,13 +1,14 @@
-'use strict'
-
-import { error, info } from './error-codes'
-import { Component, Test, ExportIndex, Enum, Model } from './templates'
-import * as vscode from 'vscode'
-import * as fs from 'fs'
-import * as mkdirp from 'mkdirp'
+import { error, info } from "./error-codes"
+import { Component, ComponentTest, ExportIndex, Enum, Model, Stylesheet } from "./templates"
+import * as vscode from "vscode"
+import * as fs from "fs"
 import * as Path from "path"
 
-let config = vscode.workspace.getConfiguration('reactTypeScriptToolbox')
+import Options, { StyleSheetOptions } from "./Options/Options"
+import FileService from "./Services/FileService"
+import File from "./Models/File"
+
+let config = vscode.workspace.getConfiguration("reactTypeScriptToolbox")
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -16,44 +17,25 @@ export function activate(context: vscode.ExtensionContext) {
             return vscode.window.showInformationMessage(info.PLEASE_CONTEXT)
         else if (fs == undefined)
             return vscode.window.showInformationMessage(info.FILE_SYSTEM_UNDEFINED)
-        else if (mkdirp == undefined)
-            return vscode.window.showInformationMessage(info.MKDIR_UNDEFINED)
         return null
     }
-    /**
-     * Creates a react component on a directory root.
-     */
-    let generateComponent = vscode.commands.registerCommand('reactTypeScriptToolbox.generateComponent', (evt) => {
+
+    function reg(cmd: string, handler: Function): vscode.Disposable {
+        return vscode.commands.registerCommand(`reactTypeScriptToolbox.${cmd}`, (evt) => {
+            if (contextFailed(evt))
+                return
+
+            handleEvent(evt, handler)
+        })
+    }
+
+    context.subscriptions.push(reg("generateComponent", createComponent));
+    context.subscriptions.push(reg("generateModel", createModel));
+    context.subscriptions.push(reg("generateEnum", createEnum));
+
+    let generateIndex = vscode.commands.registerCommand("reactTypeScriptToolbox.generateIndex", (evt) => {
         if (contextFailed(evt))
             return
-
-        handleEvent(evt, createComponent)
-    });
-
-    /**
-     * Creates a typescript model on a directory root.
-     */
-    let generateModel = vscode.commands.registerCommand('reactTypeScriptToolbox.generateModel', (evt) => {
-        if (contextFailed(evt))
-            return
-
-        handleEvent(evt, createModel);
-    });
-
-    /**
-     * Creates a typescript enum on a directory root.
-     */
-    let generateEnum = vscode.commands.registerCommand('reactTypeScriptToolbox.generateEnum', (evt) => {
-        if (contextFailed(evt))
-            return
-
-        handleEvent(evt, createEnum);
-    });
-
-    let generateIndex = vscode.commands.registerCommand('reactTypeScriptToolbox.generateIndex', (evt) => {
-        if (contextFailed(evt))
-            return
-
 
         fs.lstat(`${evt.fsPath}`, (err, stats) => {
             if (err) {
@@ -65,12 +47,9 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showInformationMessage(info.SELECT_DIRECTORY)
             }
         })
-    });
+    })
 
-    context.subscriptions.push(generateComponent);
-    context.subscriptions.push(generateModel);
-    context.subscriptions.push(generateEnum);
-    context.subscriptions.push(generateIndex);
+    context.subscriptions.push(generateIndex)
 }
 
 // programmer uses confusion, how effective is it?
@@ -92,104 +71,45 @@ function createIndex(path: string): void {
 }
 
 function createComponent(path: string, className: string): void {
-    const regex = /(^[A-Z][A-Za-z]*$)/;
+    creationWrapper(path, className, () => {
+        const folder = Path.resolve(path, className)
 
-    if (!className.match(regex) && config.get<boolean>('regexCheck', true)) {
-        vscode.window.showErrorMessage(error.REGEX_ERROR);
-        return;
+        const componentFile: File = Component.create(folder, className)
+        const exportFile: File = ExportIndex.create(folder, className)
+        const stylesheetFile: File = Stylesheet.create(folder, className)
+        const testFile: File = ComponentTest.create(folder, className)
+
+        FileService.write(componentFile, exportFile, stylesheetFile, testFile)
+    })
+}
+
+
+function creationWrapper(path: string, className: string, creation: Function): void {
+    const regex = /(^[A-Z][A-Za-z]*$)/
+    if (!className.match(regex) && Options.regexCheck) {
+        vscode.window.showErrorMessage(error.REGEX_ERROR)
+        return
     }
-
-    /** Folder Path */
-    const folder = Path.resolve(path, className)
-
-    /** Options */
-    const stylesheet = config.get<string>('stylesheet', 'none');
-
-    /** Component */
-    const componentData = Component.create(className, stylesheet);
-    const componentPath = Path.resolve(folder, `${className}.tsx`)
-
-    /** Export TS */
-    const exportData = ExportIndex.create(className)
-    const exportPath = Path.resolve(folder, `index.ts`)
-
-    /** Test */
-    const testData = Test.create(className);
-    const testPath = Path.resolve(folder, `${className}.test.tsx`)
-    const generateTests = config.get<boolean>('test', false);
-
-    /** Stylesheet */
-    const stylesheetData = '';
-    let stylesheetPath = Path.resolve(folder, `${className}.`)
-
-    if (stylesheet !== 'none') {
-        stylesheetPath += stylesheet;
-    }
-
-    mkdirp(folder, (err) => {
-        fs.writeFile(componentPath, componentData);
-        fs.writeFile(exportPath, exportData)
-
-        if (generateTests) {
-            fs.writeFile(testPath, testData);
-        }
-
-        if (stylesheet !== 'none') {
-            fs.writeFile(stylesheetPath, stylesheetData);
-        }
-    });
-
+    creation(path, className)
     appendToRootIndex(path, className)
 }
 
 function createEnum(path: string, className: string): void {
-    const regex = /(^[A-Z][A-Za-z]*$)/;
-
-    if (!className.match(regex) && config.get<boolean>('regexCheck', true)) {
-        vscode.window.showErrorMessage(error.REGEX_ERROR)
-        return
-    }
-
-    /** Folder Path */
-    const folder = Path.resolve(path, className)
-
-    /** Enum */
-    const enumData = Enum.create(className);
-    const enumPath = Path.resolve(folder, `${className}.ts`)
-    const exportData = ExportIndex.create(className)
-    const exportPath = Path.resolve(folder, `index.ts`)
-
-    mkdirp(folder, (err) => {
-        fs.writeFile(enumPath, enumData);
-        fs.writeFile(exportPath, exportData)
+    creationWrapper(path, className, () => {
+        const folder = Path.resolve(path, className)
+        const enumFile: File = Enum.create(folder, className)
+        const exportFile: File = ExportIndex.create(folder, className)
+        FileService.write(enumFile, exportFile)
     })
-
-    appendToRootIndex(path, className)
 }
 
 function createModel(path: string, className: string): void {
-    const regex = /(^[A-Z][A-Za-z]*$)/;
-
-    if (!className.match(regex) && config.get<boolean>('regexCheck', true)) {
-        vscode.window.showErrorMessage(error.REGEX_ERROR)
-        return
-    }
-
-    /** Folder Path */
-    const folder = Path.resolve(path, className)
-
-    /** Model */
-    const modelData = Model.create(className);
-    const modelPath = Path.resolve(folder, `${className}.ts`)
-    const exportData = ExportIndex.create(className)
-    const exportPath = Path.resolve(folder, `index.ts`)
-
-    mkdirp(folder, (err) => {
-        fs.writeFile(modelPath, modelData);
-        fs.writeFile(exportPath, exportData)
+    creationWrapper(path, className, () => {
+        const folder = Path.resolve(path, className)
+        const modeFile: File = Model.create(folder, className)
+        const exportFile = ExportIndex.create(folder, className)
+        FileService.write(modeFile, exportFile)
     })
-
-    appendToRootIndex(path, className)
 }
 
 function handleEvent(evt: any, success: Function) {
@@ -199,14 +119,14 @@ function handleEvent(evt: any, success: Function) {
         }
         if (stats.isDirectory()) {
             vscode.window.showInputBox(inputBoxOptions).then((value: string) => {
-                if (value !== undefined && value !== '') {
+                if (value !== undefined && value !== "") {
                     success(evt.fsPath, value)
                 }
             })
         } else if (stats.isFile()) {
             vscode.window.showInformationMessage(info.SELECT_DIRECTORY)
         }
-    });
+    })
 }
 
 const inputBoxOptions: vscode.InputBoxOptions = {
@@ -217,9 +137,7 @@ const inputBoxOptions: vscode.InputBoxOptions = {
 const inputBoxOptionsEnum: vscode.InputBoxOptions = {
     placeHolder: "enum name",
     prompt: "Creates a directory, an enum class and an export index."
-};
-
-
+}
 
 function appendToRootIndex(path, className) {
     const indexRootPath: string = Path.resolve(path, "index.ts")
@@ -252,7 +170,7 @@ function appendToRootIndex(path, className) {
         });
 
         // do cool stuff
-        if (layered && config.get<boolean>('sortIndex', true)) {
+        if (layered && config.get<boolean>("sortIndex", true)) {
             vscode.window.showQuickPick(Object.getOwnPropertyNames(categories)).then((value: string) => {
                 if (value !== undefined && value !== '') {
 
@@ -263,7 +181,7 @@ function appendToRootIndex(path, className) {
                             categories[key].push(`export { default as ${className} } from "./${className}"`)
                         categories[key].sort((a, b) => a.localeCompare(b))
 
-                        newFile += `${newFile == "" ? '' : '\n'}// ${key}\n`
+                        newFile += `${newFile == "" ? "" : "\n"}// ${key}\n`
                         for (const iterator of categories[key]) {
                             if (iterator && iterator.trim() !== "")
                                 newFile += `${iterator}\n`
