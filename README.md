@@ -9,13 +9,31 @@ Extension to create TypeScript React Components from Visual Studio Code explorer
 
 ## Features
 
-Create a React Component with a Test and a Less file from the Visual Studio Code Explorer Contextmenu.
+Create React Components, Typescript Enums, Model Classes (or just ordinary classes), and index files by rightclicking in the context menu of the file explorer and generate it. The files are created with index export files, and the export will be appended to the root index, if it is present.
 
 ![tool](images/showcase.gif)
 
 > Tip: Rightclick in Visual Studio Code Explorer and > Generate Component.
 
 > Tip: Use the settings.json to disable test generation or changing the stylesheet type.
+
+### Root Index Sort
+
+If this feature is activated, your root index exports will be sorted if you have a structure like this:
+
+```typescript
+// Models
+export a from "./a"
+export d from "./c"
+
+// Components
+export b from "./b"
+
+// Utils
+export c from "./c"
+```
+
+The comments represent layers, the extension will not sort between Components and Models exports for example. There is a selection menu after creating a file, so you can select to which layer the new export is appended. 
 
 ## Requirements
 
@@ -31,6 +49,7 @@ Available Settings:
 * `reactTypeScriptToolbox.indentation`: `(tabs | spaces)`
 * `reactTypeScriptToolbox.sortIndex`: `(true | false)`
 * `reactTypeScriptToolbox.testFolder`: `(same | flat | structured)`
+* `reactTypeScriptToolbox.removeSemicolonsFromImportsOnSave (still experimental)`: `(true | false)`
 
 ## Known Issues
 

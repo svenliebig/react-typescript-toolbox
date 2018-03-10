@@ -3,6 +3,13 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 1.3.0 - 10.03.2018
+
+
+### Added
+
+- Created new Feature that delete semicolons from import in ts and tsx files on save, this is still an experimental feature, it's disabled by default. You can activated it with the option: removeSemicolonsFromImportsOnSave.
+
 ## 1.2.0 - 10.03.2018
 
 

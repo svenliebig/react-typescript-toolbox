@@ -36,6 +36,10 @@ export default class Options {
         }
     }
 
+    public static get removeSemicolonsFromImportsOnSave() {
+        return config.get<boolean>('removeSemicolonsFromImportsOnSave', false)
+    }
+
     public static get test(): boolean {
         return config.get<boolean>('test', false)
     }

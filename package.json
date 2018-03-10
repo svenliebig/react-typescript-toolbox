@@ -2,7 +2,7 @@
     "name": "react-typescript-toolbox",
     "displayName": "React Typescript Toolbox",
     "description": "Helpful toolbox for React Web Applications with Typescript",
-    "version": "1.2.0",
+    "version": "1.3.1",
     "publisher": "svenliebig",
     "icon": "images/logo.png",
     "engines": {
@@ -31,7 +31,8 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "commands": [{
+        "commands": [
+            {
                 "command": "reactTypeScriptToolbox.generateComponent",
                 "title": "Generate Component"
             },
@@ -49,7 +50,8 @@
             }
         ],
         "menus": {
-            "commandPalette": [{
+            "commandPalette": [
+                {
                     "command": "reactTypeScriptToolbox.generateComponent",
                     "when": "false"
                 },
@@ -66,7 +68,8 @@
                     "when": "false"
                 }
             ],
-            "explorer/context": [{
+            "explorer/context": [
+                {
                     "command": "reactTypeScriptToolbox.generateComponent",
                     "group": "edit"
                 },
@@ -97,6 +100,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Indicates if a test should be generated or not."
+                },
+                "reactTypeScriptToolbox.removeSemicolonsFromImportsOnSave": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, this will remove the semicolons from imports in .ts / .tsx files when the file is saved. (This is experimental for now)"
                 },
                 "reactTypeScriptToolbox.testFolder": {
                     "type": "string",

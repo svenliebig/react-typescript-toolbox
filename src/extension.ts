@@ -12,7 +12,8 @@ import File from "./Models/File"
 import Component from "./Templates/Component/Component"
 import ComponentTest from "./Templates/ComponentTest/ComponentTest"
 import Model from "./Templates/Model/Model";
-import Stylesheet from "./Templates/Stylesheet/Stylesheet";
+import Stylesheet from "./Templates/Stylesheet/Stylesheet"
+import RemoveImportSemicolonsFromDoc from "./Services/RemoveImportSemicolonsFromDoc/RemoveImportSemicolonsFromDoc";
 
 let config = vscode.workspace.getConfiguration("reactTypeScriptToolbox")
 
@@ -38,6 +39,12 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(reg("generateComponent", createComponent));
     context.subscriptions.push(reg("generateModel", createModel));
     context.subscriptions.push(reg("generateEnum", createEnum));
+
+    if (Options.removeSemicolonsFromImportsOnSave) {
+        vscode.workspace.onDidSaveTextDocument(doc => {
+            RemoveImportSemicolonsFromDoc.process(doc)
+        })
+    }
 
     let generateIndex = vscode.commands.registerCommand("reactTypeScriptToolbox.generateIndex", (evt) => {
         if (contextFailed(evt))
