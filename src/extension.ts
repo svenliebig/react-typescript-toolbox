@@ -1,5 +1,5 @@
 import { error, info } from "./error-codes"
-import { Component, ComponentTest, ExportIndex, Enum, Model, Stylesheet } from "./templates"
+import { ExportIndex, Enum, Model, Stylesheet } from "./templates"
 import * as vscode from "vscode"
 import * as fs from "fs"
 import * as Path from "path"
@@ -7,6 +7,10 @@ import * as Path from "path"
 import Options, { StyleSheetOptions } from "./Options/Options"
 import FileService from "./Services/FileService"
 import File from "./Models/File"
+
+// Templates
+import Component from "./Templates/Component/Component"
+import ComponentTest from "./Templates/ComponentTest/ComponentTest"
 
 let config = vscode.workspace.getConfiguration("reactTypeScriptToolbox")
 

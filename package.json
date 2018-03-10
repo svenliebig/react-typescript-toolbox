@@ -31,8 +31,7 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "commands": [
-            {
+        "commands": [{
                 "command": "reactTypeScriptToolbox.generateComponent",
                 "title": "Generate Component"
             },
@@ -50,8 +49,7 @@
             }
         ],
         "menus": {
-            "commandPalette": [
-                {
+            "commandPalette": [{
                     "command": "reactTypeScriptToolbox.generateComponent",
                     "when": "false"
                 },
@@ -68,8 +66,7 @@
                     "when": "false"
                 }
             ],
-            "explorer/context": [
-                {
+            "explorer/context": [{
                     "command": "reactTypeScriptToolbox.generateComponent",
                     "group": "edit"
                 },
@@ -146,8 +143,5 @@
         "fs": "^0.0.1-security",
         "mkdirp": "^0.5.1",
         "vsce": "^1.30.0"
-    },
-    "jest": {
-        "testRegex": "(/test/.*|(\\.|/)(test|spec))\\.(ts)$"
     }
 }

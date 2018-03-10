@@ -1,8 +1,7 @@
-import * as assert from 'assert';
+import * as assert from 'assert'
 
-
-import * as vscode from 'vscode';
-import { Component } from '../src/templates';
+import * as vscode from 'vscode'
+import Component from '../src/Templates/Component/Component'
 
 suite("Templates tests", () => {
     const editorConfig = vscode.workspace.getConfiguration('editor')
@@ -15,7 +14,7 @@ suite("Templates tests", () => {
         if (indent === "spaces") {
             assert.equal(Component.getSeparator(), " ".repeat(spaceCount));
         } else {
-            assert.equal(Component.getSeparator(), "\t");
+            assert.equal(Component.getSeparator(), "\t")
         }
-    });
-});
+    })
+})
