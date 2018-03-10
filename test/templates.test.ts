@@ -1,7 +1,7 @@
-import * as assert from 'assert'
+import * as assert from "assert"
 
-import * as vscode from 'vscode'
-import Component from '../src/Templates/Component/Component'
+import * as vscode from "vscode"
+import Component from "../src/Templates/Component/Component"
 
 suite("Templates tests", () => {
     const editorConfig = vscode.workspace.getConfiguration('editor')
