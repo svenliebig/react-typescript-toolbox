@@ -18,9 +18,9 @@ export default class FileService {
         files.forEach(file => {
             if (file) {
                 if (fs.existsSync(file.path)) {
-                    fs.writeFile(file.completePath, file.content)
+                    fs.writeFileSync(file.completePath, file.content)
                 } else {
-                    mkdirp(file.path, err => fs.writeFile(file.completePath, file.content))
+                    mkdirp(file.path, err => fs.writeFileSync(file.completePath, file.content))
                 }
             }
         })

@@ -46,12 +46,11 @@ export default class ComponentTest extends Base {
 		return splitted.splice(1)
 	}
 
-
 	private static createContent(name: string, subPath: string): string {
 		const s = ComponentTest.getSeparator()
 		const semi = ComponentTest.getSemicolon()
 
-		let result = ''
+		let result = ""
 		result += `/** Import React */\n`
 		result += `import * as ReactDOM from 'react-dom'${semi}\n`
 		result += `import * as React from 'react'${semi}\n`
