@@ -4,36 +4,18 @@ import * as Path from "path"
 import Base from "../Base/Base"
 import File from "../../Models/File/File"
 import Options, { TestFolderOptions } from "../../Options/Options"
+import BaseTest from "../BaseTest/BaseTest"
 
-export default class ComponentTest extends Base {
+export default class ComponentTest extends BaseTest {
 	static create(path: string, name: string): File {
 		if (Options.test) {
 			const file = new File()
 
-			const folder = Options.testFolder
-			let subPath = "."
+			const pathObject = ComponentTest.getPathes(path, name)
 
-			if (folder === TestFolderOptions.Same) {
-				file.path = path
-			} else if (folder === TestFolderOptions.Flat) {
-				const root = vscode.workspace.workspaceFolders[0].uri.fsPath
-				const structure = path.replace(root, "").replace(/\\/g, "/")
-				subPath = ".." + structure
-				file.path = Path.resolve(root, "test")
-			} else if (folder === TestFolderOptions.Structured) {
-				const root = vscode.workspace.workspaceFolders[0].uri.fsPath
-				const structure = path.replace(root, "").replace(/\\/g, "/")
-
-				const testFolderStr = ComponentTest.createTestFolderStructure(structure, name)
-				file.path = Path.resolve(root, "test", Path.join.apply(Path, testFolderStr))
-
-
-				const up = ("/..".repeat(testFolderStr.length))
-				subPath = ".." + up + path.replace(root, "").replace(/\\/g, "/")
-			}
-
+			file.path = pathObject.path
 			file.name = `${name}.test`
-			file.content = ComponentTest.createContent(name, subPath)
+			file.content = ComponentTest.createContent(name, pathObject.import)
 			file.type = "tsx"
 
 			return file
@@ -41,45 +23,32 @@ export default class ComponentTest extends Base {
 		return null
 	}
 
-	private static createTestFolderStructure(src, className) {
-		const splitted = src.split("/").filter(e => e !== "" && e !== className)
-		return splitted.splice(1)
-	}
-
 	private static createContent(name: string, subPath: string): string {
 		const s = ComponentTest.getSeparator()
 		const semi = ComponentTest.getSemicolon()
 
 		let result = ""
-		result += `/** Import React */\n`
-		result += `import * as ReactDOM from 'react-dom'${semi}\n`
-		result += `import * as React from 'react'${semi}\n`
+		result += this.createComment("Import React")
+		result += `import * as React from "react"${semi}\n`
 		result += `\n`
-		result += `/** Import Test Enviroment */\n`
-		result += `import { shallow } from 'enzyme'${semi}\n`
-		result += `import 'jest-enzyme'${semi}\n`
+		result += this.createComment("Import Test Enviroment")
+		result += `import { shallow, ShallowWrapper } from "enzyme"${semi}\n`
 		result += `\n`
-		result += `/** Import Tested Component */\n`
+		result += this.createComment("Import Tested Component")
 		result += `import ${name} from '${subPath}/${name}'${semi}\n`
 		result += `\n`
-		result += `const classUnderTest = ${name}${semi}\n`
+		result += `describe(\`<\${${name}.name} />\`, () => {\n`
 		result += `\n`
-		result += `it('renders without crashing', () => {\n`
-		result += `${s}const div = document.createElement('div')${semi}\n`
-		result += `${s}ReactDOM.render(<${name} />, div)${semi}\n`
-		result += `})${semi}\n`
+		result += `${s}describe("default", () => {\n`
+		result += `${s}${s}let html: ShallowWrapper${semi}\n`
 		result += `\n`
-		result += `describe('render', () => {\n`
+		result += `${s}${s}beforeAll(() => {\n`
+		result += `${s}${s}${s}html = shallow(<${name} />)${semi}\n`
+		result += `${s}${s}})${semi}\n`
 		result += `\n`
-		result += `${s}it('should render with props', () => {\n`
-		result += `${s}${s}// preparation\n`
-		result += `${s}${s}const comp = new classUnderTest({ })${semi}\n`
-		result += `${s}${s}\n`
-		result += `${s}${s}// execution\n`
-		result += `${s}${s}const html = shallow(comp.render())${semi}\n`
-		result += `${s}${s}\n`
-		result += `${s}${s}// testing\n`
-		result += `${s}${s}expect(html).toContainReact(<div />)${semi}\n`
+		result += `${s}${s}it("should render a <div />", () => {\n`
+		result += `${s}${s}${s}expect(html.contains(<div />)).toBe(true)${semi}\n`
+		result += `${s}${s}})${semi}\n`
 		result += `${s}})${semi}\n`
 		result += `})${semi}\n`
 

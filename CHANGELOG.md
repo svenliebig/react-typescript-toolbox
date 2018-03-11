@@ -3,6 +3,18 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 1.4.0 - 11.03.2018
+
+### Added
+
+- Test Creation for Model Classes
+
+## 1.3.2 - 11.03.2018
+
+### Fixed
+
+- Updated the test file to work correctly with updated enzyme / jest configurations
+
 ## 1.3.0 - 10.03.2018
 
 

@@ -11,9 +11,10 @@ import File from "./Models/File"
 // Templates
 import Component from "./Templates/Component/Component"
 import ComponentTest from "./Templates/ComponentTest/ComponentTest"
-import Model from "./Templates/Model/Model";
+import Model from "./Templates/Model/Model"
 import Stylesheet from "./Templates/Stylesheet/Stylesheet"
-import RemoveImportSemicolonsFromDoc from "./Services/RemoveImportSemicolonsFromDoc/RemoveImportSemicolonsFromDoc";
+import RemoveImportSemicolonsFromDoc from "./Services/RemoveImportSemicolonsFromDoc/RemoveImportSemicolonsFromDoc"
+import ModelTest from "./Templates/ModelTest/ModelTest"
 
 let config = vscode.workspace.getConfiguration("reactTypeScriptToolbox")
 
@@ -121,7 +122,8 @@ function createModel(path: string, className: string): void {
         const folder = Path.resolve(path, className)
         const modeFile: File = Model.create(folder, className)
         const exportFile = ExportIndex.create(folder, className)
-        FileService.write(modeFile, exportFile)
+        const testFile: File = ModelTest.create(folder, className)
+        FileService.write(modeFile, exportFile, testFile)
     })
 }
 
