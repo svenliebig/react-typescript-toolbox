@@ -7,20 +7,26 @@ import Options, { TestFolderOptions } from "../../Options/Options"
 import BaseTest from "../BaseTest/BaseTest"
 
 export default class ComponentTest extends BaseTest {
-	static create(path: string, name: string): File {
-		if (Options.test) {
-			const file = new File()
+	static create(path: string, name: string): Promise<File | null> {
+		return new Promise((resolve, reject) => {
+			if (Options.test) {
+				const file = new File()
 
-			const pathObject = ComponentTest.getPathes(path, name)
+				const pathObject = ComponentTest.getPathes(path, name).then(pathObject => {
+					if (!pathObject) {
+						resolve(null)
+					}
 
-			file.path = pathObject.path
-			file.name = `${name}.test`
-			file.content = ComponentTest.createContent(name, pathObject.import)
-			file.type = "tsx"
+					file.path = pathObject.path
+					file.name = `${name}.test`
+					file.content = ComponentTest.createContent(name, pathObject.import)
+					file.type = "tsx"
 
-			return file
-		}
-		return null
+					resolve(file)
+				})
+
+			}
+		})
 	}
 
 	private static createContent(name: string, subPath: string): string {
@@ -35,7 +41,7 @@ export default class ComponentTest extends BaseTest {
 		result += `import { shallow, ShallowWrapper } from "enzyme"${semi}\n`
 		result += `\n`
 		result += this.createComment("Import Tested Component")
-		result += `import ${name} from '${subPath}/${name}'${semi}\n`
+		result += `import ${name} from "${subPath}/${name}"${semi}\n`
 		result += `\n`
 		result += `describe(\`<\${${name}.name} />\`, () => {\n`
 		result += `\n`

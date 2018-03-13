@@ -3,20 +3,26 @@ import BaseTest from "../BaseTest/BaseTest"
 import File from "../../Models/File/File"
 
 export default class ModelTest extends BaseTest {
-    static create(path: string, name: string): File {
-        if (Options.test) {
-            const file = new File()
+    static create(path: string, name: string): Promise<File | null> {
+        return new Promise((resolve, reject) => {
 
-            const pathObject = ModelTest.getPathes(path, name)
+            if (Options.test) {
+                const file = new File()
 
-            file.path = pathObject.path
-            file.content = ModelTest.createContent(name, pathObject.import)
-            file.name = `${name}.test`
-            file.type = "ts"
+                const pathObject = ModelTest.getPathes(path, name).then(pathObject => {
+                    if (!pathObject) {
+                        resolve(null)
+                    }
 
-            return file
-        }
-        return null
+                    file.path = pathObject.path
+                    file.content = ModelTest.createContent(name, pathObject.import)
+                    file.name = `${name}.test`
+                    file.type = "ts"
+
+                    resolve(file)
+                })
+            }
+        })
     }
 
     private static createContent(name: string, importStr: string) {

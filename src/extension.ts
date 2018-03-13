@@ -91,9 +91,9 @@ function createComponent(path: string, className: string): void {
         const componentFile: File = Component.create(folder, className)
         const exportFile: File = ExportIndex.create(folder, className)
         const stylesheetFile: File = Stylesheet.create(folder, className)
-        const testFile: File = ComponentTest.create(folder, className)
-
-        FileService.write(componentFile, exportFile, stylesheetFile, testFile)
+        ComponentTest.create(folder, className).then(testFile => {
+            FileService.write(componentFile, exportFile, stylesheetFile, testFile)
+        })
     })
 }
 
@@ -122,8 +122,9 @@ function createModel(path: string, className: string): void {
         const folder = Path.resolve(path, className)
         const modeFile: File = Model.create(folder, className)
         const exportFile = ExportIndex.create(folder, className)
-        const testFile: File = ModelTest.create(folder, className)
-        FileService.write(modeFile, exportFile, testFile)
+        ModelTest.create(folder, className).then(testFile => {
+            FileService.write(modeFile, exportFile, testFile)
+        })
     })
 }
 

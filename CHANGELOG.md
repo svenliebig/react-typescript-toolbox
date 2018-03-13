@@ -3,6 +3,14 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 1.4.1 - 13.03.2018
+
+### Fix
+
+- Test Creation in Folder Structure didn't work when the test folder wasn't in the root directory. Now the extension is searching for all `package.json` files in the workspace and checks if the package json is in a subfolder of the created component. If `true` then the test will generated with this folder as root and generate the test in the /test folder.
+
+- Test template structure update, no semicolons and double quotes until preferences are up for this
+
 ## 1.4.0 - 11.03.2018
 
 ### Added

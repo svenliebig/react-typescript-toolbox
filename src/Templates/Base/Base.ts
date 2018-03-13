@@ -15,6 +15,6 @@ export default class Base {
 	}
 
 	static getSemicolon() {
-		return ";"
+		return ""
 	}
 }
