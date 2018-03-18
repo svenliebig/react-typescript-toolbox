@@ -21,6 +21,8 @@ export default class ModelTest extends BaseTest {
 
                     resolve(file)
                 })
+            } else {
+                resolve(null)
             }
         })
     }

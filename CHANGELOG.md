@@ -3,6 +3,12 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 1.4.2 - 18.03.2018
+
+### Fix
+
+- Components and Models where not created when the test options was set to false
+
 ## 1.4.1 - 13.03.2018
 
 ### Fix

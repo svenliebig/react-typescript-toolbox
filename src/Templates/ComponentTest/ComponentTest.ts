@@ -24,7 +24,8 @@ export default class ComponentTest extends BaseTest {
 
 					resolve(file)
 				})
-
+			} else {
+				resolve(null)
 			}
 		})
 	}
