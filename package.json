@@ -125,6 +125,21 @@
                     "type": "boolean",
                     "default": true,
                     "description": "If your classname is check by regex (^[A-Z][A-Za-z]*$), checkout on http://regexr.com/3gngl."
+                },
+                "reactTypeScriptToolbox.quotemarks": {
+                    "type": "string",
+                    "default": "double",
+                    "enum": [
+                        "double",
+                        "single",
+                        "back-tick"
+                    ],
+                    "enumDescriptions": [
+                        "Uses double quotemarks (\") in the generated files",
+                        "Uses single quotemarks (') in the generated files",
+                        "Uses back-ticks (`) in the generated files"
+                    ],
+                    "description": "Choose the quotemarks you want to use in the generated files."
                 }
             }
         }
