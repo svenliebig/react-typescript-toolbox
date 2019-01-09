@@ -3,6 +3,13 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 1.5.0 - 09.01.2019
+
+### Added
+
+- add support for double, single quotemarks for imports and exports in files
+- add support for double, single and back-tick quotemarks for strings
+
 ## 1.4.2 - 18.03.2018
 
 ### Fix
@@ -30,7 +37,6 @@ All notable changes to the "react-typescript-toolbox" extension will be document
 - Updated the test file to work correctly with updated enzyme / jest configurations
 
 ## 1.3.0 - 10.03.2018
-
 
 ### Added
 

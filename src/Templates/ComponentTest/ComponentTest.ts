@@ -8,7 +8,7 @@ export default class ComponentTest extends BaseTest {
 			if (Options.test) {
 				const file = new File()
 
-				const pathObject = ComponentTest.getPathes(path, name).then(pathObject => {
+				ComponentTest.getPathes(path, name).then(pathObject => {
 					if (!pathObject) {
 						resolve(null)
 					}
@@ -42,7 +42,7 @@ export default class ComponentTest extends BaseTest {
 		result += this.createComment("Import Tested Component")
 		result += `import ${name} from ${qi}${subPath}/${name}${qi}${semi}\n`
 		result += `\n`
-		result += `describe(\`<\${${name}.name} />\`, () => {\n`
+		result += `describe(${q}<${q === "`" ? `\${${name}.name}` : name} />${q}, () => {\n`
 		result += `\n`
 		result += `${s}describe(${q}default${q}, () => {\n`
 		result += `${s}${s}let html: ShallowWrapper${semi}\n`

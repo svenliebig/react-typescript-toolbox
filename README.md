@@ -50,6 +50,8 @@ Available Settings:
 * `reactTypeScriptToolbox.sortIndex`: `(true | false)`
 * `reactTypeScriptToolbox.testFolder`: `(same | flat | structured)`
 * `reactTypeScriptToolbox.removeSemicolonsFromImportsOnSave (still experimental)`: `(true | false)`
+* `reactTypeScriptToolbox.quotemarksString`: `double | single | back-tick`
+* `reactTypeScriptToolbox.quotemarksImportExport`: `double | single`
 
 ## Known Issues
 
