@@ -1,11 +1,7 @@
-import * as vscode from "vscode"
 import File from "./Models/File/File"
-import Options, { StyleSheetOptions, TestFolderOptions } from "./Options/Options"
-import * as fs from "fs"
-import * as Path from "path"
-import Base from "./Templates/Base/Base";
+import Base from "./Templates/Base/Base"
 
-export class ExportIndex {
+export class ExportIndex extends Base {
 	static create(path: string, name: string): File {
 		const file = new File()
 
@@ -18,7 +14,8 @@ export class ExportIndex {
 	}
 
 	private static createContent(name): string {
-		const r = `export { default } from "./${name}"`
+		const qi = ExportIndex.getImportExportQuotemarks()
+		const r = `export { default } from ${qi}./${name}${qi}`
 		return r
 	}
 }
@@ -36,11 +33,12 @@ export class Enum extends Base {
 	}
 
 	private static createContent(name: string) {
-		const separator = Enum.getSeparator()
+		const s = Enum.getSeparator()
+		const q = Enum.getQuotemark()
 
 		let content = ''
 		content += `enum ${name} {\n`
-		content += `${separator}MyConstant = "MyConstantValue"\n`
+		content += `${s}MyConstant = ${q}MyConstantValue${q}\n`
 		content += `}\n`
 		content += `export default ${name}`
 

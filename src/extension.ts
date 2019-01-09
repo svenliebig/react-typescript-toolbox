@@ -4,7 +4,7 @@ import * as vscode from "vscode"
 import * as fs from "fs"
 import * as Path from "path"
 
-import Options, { StyleSheetOptions } from "./Options/Options"
+import Options, { StyleSheetOptions, Quotemarks } from "./Options/Options"
 import FileService from "./Services/FileService"
 import File from "./Models/File"
 
@@ -211,13 +211,9 @@ function appendToRootIndex(path, className) {
                     })
                 }
             })
-
-            const joined = rows.join("\n")
-
-            // Append if not layered
         } else {
-
-            fs.appendFile(indexRootPath, `\nexport { default as ${className} } from "./${className}"`, (err) => {
+            const qi = Options.importExportQuotemark === Quotemarks.Double ? "\"" : "'"
+            fs.appendFile(indexRootPath, `\nexport { default as ${className} } from ${qi}./${className}${qi}`, (err) => {
                 if (err)
                     throw err
                 vscode.window.showInformationMessage(`Component '${className}' created!`);

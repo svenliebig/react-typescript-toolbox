@@ -1,6 +1,6 @@
-import Base from "../Base/Base"
 import File from "../../Models/File/File"
 import Options, { StyleSheetOptions } from "../../Options/Options"
+import Base from "../Base/Base"
 
 export default class Component extends Base {
     static create(path: string, name: string): File {
@@ -16,14 +16,16 @@ export default class Component extends Base {
 
     private static createContent(name: string) {
         const style = Options.styleSheet
+        const q = Component.getQuotemark()
+        const qi = Component.getImportExportQuotemarks()
         const s = Component.getSeparator()
 
-        let result = `import * as React from "react"\n`
+        let result = `import * as React from ${qi}react${qi}\n`
         result += `\n`
 
         if (style !== StyleSheetOptions.None) {
             result += `/** Stylesheet Imports */\n`
-            result += `import "./${name}.${style}"\n`
+            result += `import ${qi}./${name}.${style}${qi}\n`
             result += `\n`
         }
 

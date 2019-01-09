@@ -1,4 +1,6 @@
 import * as vscode from "vscode"
+import Options from "../../Options"
+import { Quotemarks } from "../../Options/Options"
 
 export default class Base {
 	static getSeparator() {
@@ -16,5 +18,27 @@ export default class Base {
 
 	static getSemicolon() {
 		return ""
+	}
+
+	static getQuotemark(): string {
+		const quotemark = Options.quotemarksString
+		switch(quotemark) {
+			case Quotemarks.Single:
+				return "'"
+			case Quotemarks.Backtick:
+				return "`"
+			default:
+				return "\""
+		}
+	}
+	
+	static getImportExportQuotemarks(): string {
+		const quotemark = Options.importExportQuotemark
+		switch(quotemark) {
+			case Quotemarks.Single:
+				return "'"
+			default:
+				return "\""
+		}
 	}
 }
