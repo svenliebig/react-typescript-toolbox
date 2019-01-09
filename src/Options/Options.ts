@@ -53,6 +53,11 @@ export default class Options {
         return config.get<boolean>('removeSemicolonsFromImportsOnSave', false)
     }
 
+    public static get semicolons() {
+        Options.reloadConfiguration()
+        return config.get<boolean>('semicolons', false)
+    }
+
     public static get test(): boolean {
         Options.reloadConfiguration()
         return config.get<boolean>('test', false)

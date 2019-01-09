@@ -16,16 +16,16 @@ export default class Component extends Base {
 
     private static createContent(name: string) {
         const style = Options.styleSheet
-        const q = Component.getQuotemark()
         const qi = Component.getImportExportQuotemarks()
         const s = Component.getSeparator()
+        const semi = Component.getSemicolon()
 
-        let result = `import * as React from ${qi}react${qi}\n`
+        let result = `import * as React from ${qi}react${qi}${semi}\n`
         result += `\n`
 
         if (style !== StyleSheetOptions.None) {
             result += `/** Stylesheet Imports */\n`
-            result += `import ${qi}./${name}.${style}${qi}\n`
+            result += `import ${qi}./${name}.${style}${qi}${semi}\n`
             result += `\n`
         }
 

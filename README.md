@@ -33,7 +33,7 @@ export b from "./b"
 export c from "./c"
 ```
 
-The comments represent layers, the extension will not sort between Components and Models exports for example. There is a selection menu after creating a file, so you can select to which layer the new export is appended. 
+The comments represent layers, the extension will not sort between Components and Models exports for example. There is a selection menu after creating a file, so you can select to which layer the new export is appended.
 
 ## Requirements
 
@@ -52,6 +52,7 @@ Available Settings:
 * `reactTypeScriptToolbox.removeSemicolonsFromImportsOnSave (still experimental)`: `(true | false)`
 * `reactTypeScriptToolbox.quotemarksString`: `double | single | back-tick`
 * `reactTypeScriptToolbox.quotemarksImportExport`: `double | single`
+* `reactTypeScriptToolbox.semicolons`: `true | false`
 
 ## Known Issues
 
