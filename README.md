@@ -1,11 +1,12 @@
+# react-typescript-toolbox
+
 ![tool](images/logo.png)![plus](images/plus.png)![react](images/react.png)
 
-# react-typescript-toolbox
 ![version](https://vsmarketplacebadge.apphb.com/version-short/svenliebig.react-typescript-toolbox.svg?style=flat-square)
 ![installs](https://vsmarketplacebadge.apphb.com/installs-short/svenliebig.react-typescript-toolbox.svg?style=flat-square)
 ![rating](https://vsmarketplacebadge.apphb.com/rating-short/svenliebig.react-typescript-toolbox.svg?style=flat-square)
 
-Extension to create TypeScript React Components from Visual Studio Code explorer menu.
+Extension to create TypeScript React Components from Visual Studio Code explorer menu. Available in the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=svenliebig.react-typescript-toolbox#overview).
 
 ## Features
 
@@ -14,7 +15,6 @@ Create React Components, Typescript Enums, Model Classes (or just ordinary class
 ![tool](images/showcase.gif)
 
 > Tip: Rightclick in Visual Studio Code Explorer and > Generate Component.
-
 > Tip: Use the settings.json to disable test generation or changing the stylesheet type.
 
 ### Root Index Sort

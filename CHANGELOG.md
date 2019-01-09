@@ -3,6 +3,12 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 1.5.1 - 09.01.2019
+
+### Fix
+
+- Typo in ComponentTest
+
 ## 1.5.0 - 09.01.2019
 
 ### Added
