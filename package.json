@@ -2,7 +2,7 @@
     "name": "react-typescript-toolbox",
     "displayName": "React Typescript Toolbox",
     "description": "Helpful toolbox for React Web Applications with Typescript",
-    "version": "1.4.3",
+    "version": "1.5.0",
     "publisher": "svenliebig",
     "icon": "images/logo.png",
     "engines": {
@@ -172,7 +172,7 @@
         "@types/mocha": "2.2.48",
         "@types/node": "9.4.7",
         "mocha": "5.0.4",
-        "typescript": "2.7.2",
+        "typescript": "^3.2.2",
         "vscode": "1.1.13"
     },
     "dependencies": {
