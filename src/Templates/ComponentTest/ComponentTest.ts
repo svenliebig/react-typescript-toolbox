@@ -36,7 +36,7 @@ export default class ComponentTest extends BaseTest {
 		result += this.createComment("Import React")
 		result += `import * as React from ${qi}react${qi}${semi}\n`
 		result += `\n`
-		result += this.createComment("Import Test Enviroment")
+		result += this.createComment("Import Test Environment")
 		result += `import { shallow, ShallowWrapper } from ${qi}enzyme${qi}${semi}\n`
 		result += `\n`
 		result += this.createComment("Import Tested Component")
