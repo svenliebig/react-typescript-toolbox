@@ -13,10 +13,10 @@ export class ExportIndex extends Base {
 		return file
 	}
 
-	private static createContent(name): string {
+	private static createContent(name: string): string {
 		const qi = ExportIndex.getImportExportQuotemarks()
-		const r = `export { default } from ${qi}./${name}${qi}`
-		return r
+		const semi = ExportIndex.getSemicolon()
+		return `export { default } from ${qi}./${name}${qi}${semi}`
 	}
 }
 
@@ -35,12 +35,13 @@ export class Enum extends Base {
 	private static createContent(name: string) {
 		const s = Enum.getSeparator()
 		const q = Enum.getQuotemark()
+		const semi = Enum.getSemicolon()
 
 		let content = ''
 		content += `enum ${name} {\n`
 		content += `${s}MyConstant = ${q}MyConstantValue${q}\n`
 		content += `}\n`
-		content += `export default ${name}`
+		content += `export default ${name}${semi}`
 
 		return content
 	}

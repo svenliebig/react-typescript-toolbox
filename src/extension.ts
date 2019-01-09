@@ -185,6 +185,9 @@ function appendToRootIndex(path, className) {
             }
         });
 
+        const qi = Options.importExportQuotemark === Quotemarks.Double ? "\"" : "'"
+        const semi = Options.semicolons ? ";" : ""
+
         // do cool stuff
         if (layered && config.get<boolean>("sortIndex", true)) {
             vscode.window.showQuickPick(Object.getOwnPropertyNames(categories)).then((value: string) => {
@@ -194,7 +197,7 @@ function appendToRootIndex(path, className) {
 
                     for (const key in categories) {
                         if (value == key)
-                            categories[key].push(`export { default as ${className} } from "./${className}"`)
+                            categories[key].push(`export { default as ${className} } from ${qi}./${className}${qi}${semi}`)
                         categories[key].sort((a, b) => a.localeCompare(b))
 
                         newFile += `${newFile == "" ? "" : "\n"}// ${key}\n`
@@ -212,8 +215,7 @@ function appendToRootIndex(path, className) {
                 }
             })
         } else {
-            const qi = Options.importExportQuotemark === Quotemarks.Double ? "\"" : "'"
-            fs.appendFile(indexRootPath, `\nexport { default as ${className} } from ${qi}./${className}${qi}`, (err) => {
+            fs.appendFile(indexRootPath, `\nexport { default as ${className} } from ${qi}./${className}${qi}${semi}`, (err) => {
                 if (err)
                     throw err
                 vscode.window.showInformationMessage(`Component '${className}' created!`);

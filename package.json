@@ -2,7 +2,7 @@
     "name": "react-typescript-toolbox",
     "displayName": "React Typescript Toolbox",
     "description": "Helpful toolbox for React Web Applications with Typescript",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "publisher": "svenliebig",
     "icon": "images/logo.png",
     "engines": {
@@ -125,6 +125,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "If your classname is check by regex (^[A-Z][A-Za-z]*$), checkout on http://regexr.com/3gngl."
+                },
+                "reactTypeScriptToolbox.semicolons": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Decide if you want to add semicolons to your generated files or not."
                 },
                 "reactTypeScriptToolbox.quotemarksString": {
                     "type": "string",

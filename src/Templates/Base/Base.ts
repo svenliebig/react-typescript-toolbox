@@ -17,7 +17,7 @@ export default class Base {
 	}
 
 	static getSemicolon() {
-		return ""
+		return Options.semicolons ? ";" : ""
 	}
 
 	static getQuotemark(): string {
