@@ -6,7 +6,8 @@ export enum StyleSheetOptions {
     None = "none",
     Less = "less",
     CSS = "css",
-    Sass = "sass"
+    Sass = "sass",
+    Scss = "scss",
 }
 
 export enum TestFolderOptions {
@@ -43,6 +44,8 @@ export default class Options {
                 return StyleSheetOptions.Less
             case "sass":
                 return StyleSheetOptions.Sass
+            case "scss":
+                return StyleSheetOptions.Scss
             default:
                 return StyleSheetOptions.None
         }

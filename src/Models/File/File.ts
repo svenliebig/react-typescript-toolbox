@@ -3,7 +3,7 @@ import * as Path from "path"
 export default class File {
     content: string
     name: string
-    type: "ts" | "tsx" | "less" | "sass" | "css"
+    type: "ts" | "tsx" | "less" | "sass" | "scss" | "css"
     path: string
 
     public get completePath(): string {
