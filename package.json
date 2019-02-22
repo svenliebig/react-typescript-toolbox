@@ -2,7 +2,7 @@
     "name": "react-typescript-toolbox",
     "displayName": "React Typescript Toolbox",
     "description": "Helpful toolbox for React Web Applications with Typescript",
-    "version": "1.5.2",
+    "version": "1.6.0",
     "publisher": "svenliebig",
     "icon": "images/logo.png",
     "engines": {
