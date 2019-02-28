@@ -15,6 +15,7 @@ import Model from "./Templates/Model/Model"
 import Stylesheet from "./Templates/Stylesheet/Stylesheet"
 import RemoveImportSemicolonsFromDoc from "./Services/RemoveImportSemicolonsFromDoc/RemoveImportSemicolonsFromDoc"
 import ModelTest from "./Templates/ModelTest/ModelTest"
+import { Context, Consumer, Provider } from "./Templates/Context"
 
 let config = vscode.workspace.getConfiguration("reactTypeScriptToolbox")
 
@@ -40,6 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(reg("generateComponent", createComponent));
     context.subscriptions.push(reg("generateModel", createModel));
     context.subscriptions.push(reg("generateEnum", createEnum));
+    context.subscriptions.push(reg("generateContext", createContext));
 
     if (Options.removeSemicolonsFromImportsOnSave) {
         vscode.workspace.onDidSaveTextDocument(doc => {
@@ -128,6 +130,17 @@ function createModel(path: string, className: string): void {
     })
 }
 
+function createContext(path: string, className: string): void {
+    creationWrapper(path, className, () => {
+        const folder = Path.resolve(path, className)
+        const contextFile: File = Context.create(folder, className)
+        const consumerFile: File = Consumer.create(folder, className)
+        const providerFile: File = Provider.create(folder, className)
+        // const exportFile = ExportIndex.create(folder, `${className}Context`, `${className}Consumer`)
+		FileService.write(contextFile, consumerFile, providerFile)
+    })
+}
+
 function handleEvent(evt: any, success: Function) {
     fs.lstat(`${evt.fsPath}`, (err, stats) => {
         if (err) {
@@ -188,7 +201,6 @@ function appendToRootIndex(path, className) {
         const qi = Options.importExportQuotemark === Quotemarks.Double ? "\"" : "'"
         const semi = Options.semicolons ? ";" : ""
 
-        // do cool stuff
         if (layered && config.get<boolean>("sortIndex", true)) {
             vscode.window.showQuickPick(Object.getOwnPropertyNames(categories)).then((value: string) => {
                 if (value !== undefined && value !== '') {

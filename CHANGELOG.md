@@ -3,6 +3,12 @@
 
 All notable changes to the "react-typescript-toolbox" extension will be documented in this file.
 
+## 1.7.0 - 28.02.2019
+
+### Add 1.7.0
+
+- Create experimental feature to generate a context with provider and consumer
+
 ## 1.5.2 - 09.01.2019
 
 ### Fix 1.5.2

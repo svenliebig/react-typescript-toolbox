@@ -2,10 +2,10 @@ import File from "./Models/File/File"
 import Base from "./Templates/Base/Base"
 
 export class ExportIndex extends Base {
-	static create(path: string, name: string): File {
+	static create(path: string, ...names: Array<string>): File {
 		const file = new File()
 
-		file.content = ExportIndex.createContent(name)
+		file.content = ExportIndex.createContent(...names)
 		file.name = "index"
 		file.type = "ts"
 		file.path = path
@@ -13,10 +13,15 @@ export class ExportIndex extends Base {
 		return file
 	}
 
-	private static createContent(name: string): string {
+	private static createContent(...names: Array<string>): string {
 		const qi = ExportIndex.getImportExportQuotemarks()
 		const semi = ExportIndex.getSemicolon()
-		return `export { default } from ${qi}./${name}${qi}${semi}`
+
+		if (names.length === 1) {
+			return `export { default } from ${qi}./${names[0]}${qi}${semi}`
+		}
+
+		return names.reduce((str, name) => str + `export { default as ${name} } from ${qi}./${name}${qi}${semi}\n`, "")
 	}
 }
 
